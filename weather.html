@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<link rel="shortcut icon" href="favicon.ico">
+	<!-- style for document-->
+<style type="text/css">
+           
+            body {
+                font-family: Calibri;
+            }
+            h3
+            {
+            	font-weight: 300;
+                font-size: 4em;
+                color: #fff;
+                background-color: khaki;
+                padding: 10px 0 20px 10px;
+                margin-bottom: 50px;
+                 border-radius: 30px
+            }
+            h2 {
+
+                font-weight: 300;
+                font-size: 4em;
+                color: #fff;
+                background-color: #071d36;
+                padding: 10px 0 0px 10px;
+                margin-bottom: 1px;
+                border: 6px solid red;
+                 border-radius: 30px;
+            }
+
+            p {             
+                color: #fff;
+                padding: 10px 30px 0px 30px;
+                margin-bottom: 1px;                
+            }    
+            
+        </style>
+	<title>weather</title>
+	<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+	<link href="./assets/css/font-awesome.css" rel="stylesheet">
+	<link href="./assets/css/font.css" rel="stylesheet">
+	<link href="./assets/css/index.css" rel="stylesheet">
+	<script src="./assets/css/bootstrap.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+<script>
+function  show()
+	{
+		
+				document.getElementById("d").style="display:block;color:#FFFFFF ;border-radius: 20px;background-color:#071d36;";
+			
+	}
+
+  
+	var app=angular.module('weatherApp',[]);
+	app.controller('weatherController', function($scope, $http){
+		$scope.search=function(){
+			$http.get("http://api.openweathermap.org/data/2.5/weather?q="+$scope.cityname+"&APPID=a2a1749c73c824e69eeefd104be53b65")
+			.then(function(response){
+				$scope.weather=response.data;
+			});
+		}
+	});
+
+
+
+ var namesArray=   ["Ranchi","ranchi","Allahabad","allahabad","Port Blair", "Vishakhapatnam", "Tirupati", "Kakinada", "Pasighat","Guwahati", "Muzaffarpur", "Bhagalpur", "Biharsharif", "Chandigarh"];
+function myFunction() {
+var text = document.getElementById("fullname").value;
+var patt1 = new RegExp('^' + text, "i");
+
+var result = [];
+if (text.length > 0) {
+for (i = 0; i < namesArray.length; i++) {
+    if (patt1.test(namesArray[i]))
+        result.push(namesArray[i]);
+}
+}
+
+document.getElementById("test").innerHTML = result.join('<br />');
+}
+</script>
+
+
+</head>
+<body style="background-image:url(background/a3.jpg) ;background-repeat:no-repeat;background-attachment: fixed;">
+
+	
+	<div class="modal-body">
+        
+          <div class="form-group" align="center">
+<h2 style="opacity:0.9;"><marquee><label align="center" style="color:#FFFFFF;">whether forcasting system</label></marquee></h2>
+				<hr>
+            <h3 style="opacity:0.5;"><label for="blog title" align="center" style="color:black;">
+		<div ng-app="weatherApp" ng-controller="weatherController">
+			<form ng-submit="search()">
+  			   <div style="margin-bottom: 25px" class="input-group"><h1>City Name</h1>
+             	<input id="fullname"   onkeyup="myFunction();" type="text" ng-model="cityname" class="form-control" name="user_id" value="" placeholder="Enter City Name.">                 <p id="test"  style="color:black;"></p>
+                
+            									</div> 
+  			<h3>Selected City: {{cityname}}</h1>
+  			<input type="submit" value="GET WEATHER" onclick="show()">
+<br><br><br>
+    				<div class="col-sm-12" >
+               <div id="d" style="display:none;"align="center"><h1> {{cityname}} Weather:</h1>
+               	<br>               				
+               	<div class="container-fluid" style="margin-top: 0px">
+		<table class="table" border="1" align="center">
+<tr style=" border-left: 6px solid red;color:#D7DA0F" align="center">
+<th>
+			country:{{weather.sys.country}}</th>
+<th>	
+sunrise:{{weather.sys.sunrise}}</th>
+
+<th>	
+sunset:{{weather.sys.sunset}}</th>	
+</tr>
+<tr style=" border-left: 6px solid red;color:#D7DA0F" align="center">
+<th>
+id:{{weather.id}}
+</th><th>
+city name:{{weather.name}}
+</th><th>
+cod:{{weather.cod}}
+</th>
+</tr>
+<tr style=" border-left: 6px solid red;color:#D7DA0F" align="center">
+<th>
+			longetude: {{weather.coord.lon}}
+</th><th>
+			latitude: {{weather.coord.lat}}
+</th><th>
+			id: {{weather.weather[0].id}}
+</th>
+</tr>
+<tr style=" border-left: 6px solid red;color:#D7DA0F" align="center">
+<th>
+main: {{weather.weather[0].main}}
+</th><th>
+description: {{weather.weather[0].description}}
+</th><th>
+icon: {{weather.weather[0].icon}}
+</th>
+</tr>
+<tr style=" border-left: 6px solid red;color:#D7DA0F" align="center">
+<th>
+base: {{weather.base}}
+</th><th>
+tempreture: {{weather.main.temp}}
+</th><th>
+pressure: {{weather.main.pressure}}
+</th>
+</tr>
+<tr style=" border-left: 6px solid red;color:#D7DA0F" align="center">
+<th>
+humidity: {{weather.main.humidity}}
+</th><th>
+temp_min: {{weather.main.temp_min}}
+</th><th>
+temp_max: {{weather.main.temp_max}}
+</th>
+</tr>
+<tr style=" border-left: 6px solid red;color:#D7DA0F" align="center">
+<th>
+visibility: {{weather.visibility}}
+</th><th>
+wind speed: {{weather.wind.speed}}
+</th><th>
+deg: {{weather.wind.deg}}
+</th>
+</tr>
+<tr style=" border-left: 6px solid red;color:#D7DA0F" align="center">
+<th>
+clouds:{{weather.clouds.all}}
+</th><th>
+dt:{{weather.dt}}
+</th><th>
+weather for casting
+</th>
+</tr>
+</table>
+
+
+           				   
+     </div>
+     </div>
+     </div>
+  
+		</div>
+            	<br><br> <br><br>
+		</label></h3>
+          </div>    
+      </div>
+
+
+
+<hr>
+<br><br>
+
+<footer class="container-fluid">
+  <div style="text-align:center;padding:1%;font-weight:bold;color:indigo">
+    devloped By Choubeyji &copy; 2018
+  </div>
+</footer>
+
+
+</body>
+</html>
